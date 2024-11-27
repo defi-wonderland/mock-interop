@@ -1,0 +1,66 @@
+.
+├── L2ToL2CrossDomainMessenger::constructor
+│   └── after deployment
+│       └── CROSS_L2_INBOX is set
+├── L2ToL2CrossDomainMessenger::initialize
+│   ├── new uninitialized proxy
+│   │   └── it sets owner
+│   ├── after deployment
+│   │   └── it reverts on implementation
+│   ├── when already initialized
+│   │   └── it reverts
+│   └── when succeeds
+│       └── it sets owner
+├── L2ToL2CrossDomainMessenger::crossDomainMessageSender
+│   ├── when called in the middle of execution
+│   │   └── it returns the sender
+│   └── when called not in the middle of execution
+│       └── it reverts
+├── L2ToL2CrossDomainMessenger::crossDomainMessageSource
+│   ├── when called in the middle of execution
+│   │   └── it returns the source
+│   └── when called not in the middle of execution
+│       └── it reverts
+├── L2ToL2CrossDomainMessenger::crossDomainMessageContext
+│   ├── when called in the middle of execution
+│   │   └── it returns the sender and source
+│   └── when called not in the middle of execution
+│       └── it reverts
+├── L2ToL2CrossDomainMessenger::sendMessage
+│   ├── when destination is the same chain
+│   │   └── it reverts
+│   ├── when target address is the CrossL2Inbox
+│   │   └── it reverts
+│   ├── when target address is L2ToL2CrossDomainMessenger
+│   │   └── it reverts
+│   └── when succeeds
+│       ├── it should increase msgNonce
+│       └── it should emit SentMessage event
+├── L2ToL2CrossDomainMessenger::relayMessage
+│   ├── when entered
+│   │   └── it reverts
+│   ├── when _id.origin is not this address
+│   │   └── it reverts
+│   ├── When wrong prefix on message
+│   │   └── it reverts
+│   ├── when destination is not this chain
+│   │   └── it reverts
+│   ├── when target address is the CrossL2Inbox
+│   │   └── it reverts
+│   ├── when target address is L2ToL2CrossDomainMessenger
+│   │   └── it reverts
+│   ├── when inbox returns InvalidHash
+│   │   └── it reverts
+│   ├── when message has been relayed already
+│   │   └── it reverts
+│   ├── when call to target fails
+│   │   └── it reverts
+│   └── when succeeds
+│       ├── it calls target with correct parameters
+│       ├── it updates successfulMessages
+│       └── emits RelayedMessage
+└── L2ToL2CrossDomainMessenger::_authorizeUpgrade
+    ├── when called from not owner
+    │   └── it reverts
+    └── when called from  owner
+        └── it succeeds

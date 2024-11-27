@@ -1,0 +1,38 @@
+.
+├── CrossL2Inbox::initialize
+│   ├── new uninitialized proxy
+│   │   └── it sets owner
+│   ├── after deployment
+│   │   └── it reverts on implementation
+│   ├── when already initialized
+│   │   └── it reverts
+│   └── when succeeds
+│       └── it sets owner
+├── CrossL2Inbox::validateMessage
+│   ├── when _checkHash() is not true
+│   │   └── it reverts
+│   └── when succeeds
+│       └── emits ExecutingMessage
+├── CrossL2Inbox::enableRelayer
+│   ├── when caller is not owner
+│   │   └── it reverts
+│   └── when succeeds
+│       ├── it emits UpdatedRelayer event
+│       └── it should set validRelayers[_relayer] to true
+├── CrossL2Inbox::disableRelayer
+│   ├── when caller is not owner
+│   │   └── it reverts
+│   └── when succeeds
+│       ├── it emits UpdatedRelayer event
+│       └── it should set validRelayers[_relayer] to false
+├── CrossL2Inbox::registerValidHash
+│   ├── when caller is not validRelayers[_relayer]
+│   │   └── it reverts
+│   └── when succeeds
+│       ├── it emits RegisteredHash event
+│       └── it should set validHashes[_hash] to true
+└── CrossL2Inbox::_authorizeUpgrade
+    ├── when called from not owner
+    │   └── it reverts
+    └── when called from  owner
+        └── it succeeds
